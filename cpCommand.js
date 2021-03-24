@@ -1,11 +1,14 @@
 const fs = require('fs')
 const readlineSync = require('readline-sync')
 
-readlineSync.question("Entrez le nom du répertoire?")
+const path = readlineSync.question("Entrer le chemin à partir duquel vous voulez copier un fichier (/home/...)?")
 
-readlineSync.question("Entrez le nom du fichier à copier ou à renommer?")
+const list = fs.readdirSync(path).forEach(file => {
+  if (file.includes(".")) { console.log(file) }
+})
 
+const file = readlineSync.question("Entrez le nom du fichier à copier ?")
+const path2 = readlineSync.question(`Entrer le chemin vers lequel vous voulez copier le fichier : ${file} (/home/...)?`)
 
-fs.copyFileSync
-
-
+fs.copyFileSync(`${path}/${file}`, `${path2}/${file}`)
+console.log(`votre fichier${file} a été copié vers ${path2}`)
